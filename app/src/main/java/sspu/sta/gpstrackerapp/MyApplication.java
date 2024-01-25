@@ -6,6 +6,7 @@ import android.location.Location;
 import java.util.ArrayList;
 import java.util.List;
 
+//Nastavení tabulky s Piny - Getters and Setters
 public class MyApplication extends Application {
 
     private static MyApplication singleton;
