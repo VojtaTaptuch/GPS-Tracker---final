@@ -29,6 +29,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Reference k UI
+
     private static final int PERMISSIONS_FINA_LOCATION = 99;
     TextView tv_lat, tv_lon, tv_altitude, tv_accuracy, tv_speed, tv_sensor, tv_updates, tv_address, tv_PinCounter;
     Button btn_newPin, btn_showPinList, btn_showMap;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     LocationCallback locationCallBack;
 
+    //Google API pro lokaci
     FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
@@ -52,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        
+        //Přiřazení UI k určité hodnotě (proměnné)
         tv_lat = findViewById(R.id.tv_lat);
         tv_lon = findViewById(R.id.tv_lon);
         tv_altitude = findViewById(R.id.tv_altitude);
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         tv_PinCounter = findViewById(R.id.tv_pinsCounter);
         btn_showMap = findViewById(R.id.btn_showMap);
 
+        //GPS update - intervaly
         locationRequest = new LocationRequest();
         locationRequest.setInterval(5000);
         locationRequest.setFastestInterval(200 * 5);
@@ -81,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //Nastavení všech tlačítek a switchů na určitou aktivitu
         btn_newPin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        //Přesnost - GPS nebo WiFi a signál
         sw_gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Zapnutí a vypnutí trackingu
         sw_locationsupdates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
         updateGPS();
     }
 
+    //Zařízení nepodporuje tato data nebo je neumí zjistit
     private void stopLocationUpdates() {
         tv_updates.setText("Location is not being tracked");
         tv_lat.setText("Not tracking location");
@@ -153,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
         updateGPS();
     }
 
-
+    
+    //Ověření a popřípadě získání práv + verze SDK
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -189,7 +200,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    
+    //Zobrazení údajů na UI
     private void updateUIValues(Location location) {
         tv_lat.setText(String.valueOf(location.getLatitude()));
         tv_lon.setText(String.valueOf(location.getLongitude()));
@@ -206,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
             tv_speed.setText("Not available");
         }
 
+        //Převod souřadnic na adresu
         Geocoder geocoder = new Geocoder(MainActivity.this);
 
         try {
